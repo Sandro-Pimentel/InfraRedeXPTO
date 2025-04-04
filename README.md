@@ -58,6 +58,15 @@ O projeto é uma atividade em trio da faculdade e seu objetivo é criar uma infr
 tráfego e desempenho.
 - [ ] Criar um painel de métricas para acompanhamento em tempo real.
 
+### Desenvolvimento
+
+O desenvolvimento do projeto é dividido em 4 sprints:
+
+- [SPRINT-1](https://github.com/Sandro-Pimentel/InfraRedeXPTO/tree/SPRINT-1)
+- [SPRINT-2]()
+- [SPRINT-3]()
+- [SPRINT-4]()
+
 ### ⚙ Tecnologias ⚙
 
 <div> 

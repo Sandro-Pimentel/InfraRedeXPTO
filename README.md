@@ -15,13 +15,13 @@ O projeto é uma atividade em trio da faculdade e seu objetivo é criar uma infr
 ### Requisitos
 
 #### Arquitetura de Rede
-- [ ] Desenhar a topologia de rede, identificando as máquinas, conexões e fluxos de dados.
-- [ ] Incluir a segmentação de redes, endereçamento IPV4.
-- [ ] Especificar a integração entre o Load Balancer, Proxy Reverso e Banco de Dados.
+- [X] Desenhar a topologia de rede, identificando as máquinas, conexões e fluxos de dados.
+- [X] Incluir a segmentação de redes, endereçamento IPV4.
+- [X] Especificar a integração entre o Load Balancer, Proxy Reverso e Banco de Dados.
 
 #### Configuração do Load Balancer
-- [ ] Implementar um Load Balancer com Nginx ou HAProxy.
-- [ ] Configurar o balanceamento entre, no mínimo, 3 máquinas para distribuir o tráfego.
+- [X] Implementar um Load Balancer com Nginx ou HAProxy.
+- [X] Configurar o balanceamento entre, no mínimo, 3 máquinas para distribuir o tráfego.
 - [ ] Criar um mecanismo de monitoramento de disponibilidade e resposta dos servidores.
 
 #### Proxy Reverso

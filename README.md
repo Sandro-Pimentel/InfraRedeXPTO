@@ -1,65 +1,81 @@
-# InfraRedeXPTO
+# InfraRedeXPTO - SPRINT-1
 
-> _💻 Status do Projeto: Em Desenvolvimento._
+> _💻 Status do Projeto: Concluída._
 
 ## Resumo
-<p align="justify"> 
-Este repositório é destinado ao desenvolvimento de uma infraestrutura de TI robusta, segura e escalável para uma empresa fictícia XPTO. 
-</p>
-
-### Desafio
 <p align="justify">
-O projeto é uma atividade em trio da faculdade e seu objetivo é criar uma infraestrutura de ti para a empresa XPTO. Ela deve possuir uma arquitetura de rede, uma representação visual de sua topologia e conexões, um load balancer, proxy reverso, um banco de dados e backend utilizando docker, uma VPN segura e DHCP.
+  
+Na primeira sprint do projeto foi focado no desenvolvimento do **Load Balancer** configurado no **Nginx** em uma máquina instância da **AWS**. Os requisitos desenvolvidos nessa sprint foram:
+
+- Arquitetura de Rede
+   - Desenhar a topologia de rede, identificando as máquinas, conexões e fluxos de dados.
+   - Incluir a segmentação de redes, endereçamento IPV4.
+   - Especificar a integração entre o Load Balancer, Proxy Reverso e Banco de Dados.
+- Configuração do Load Balancer
+   - Implementar um Load Balancer com Nginx ou HAProxy.
+   - Configurar o balanceamento entre, no mínimo, 3 máquinas para distribuir o tráfego.
+
 </p>
 
-### Requisitos
+### Desenvolvimento
+<p align="justify">
+  
+Para iniciar a primeira sprint foi necessário desenvolver a estrutura de rede do projeto por meio do site **SmartDraw**:
 
-#### Arquitetura de Rede
-- [ ] Desenhar a topologia de rede, identificando as máquinas, conexões e fluxos de dados.
-- [ ] Incluir a segmentação de redes, endereçamento IPV4.
-- [ ] Especificar a integração entre o Load Balancer, Proxy Reverso e Banco de Dados.
+<img src="https://github.com/user-attachments/assets/ac35d36b-aa96-43aa-b1de-82a8683a4b74" width=700 />
 
-#### Configuração do Load Balancer
-- [ ] Implementar um Load Balancer com Nginx ou HAProxy.
-- [ ] Configurar o balanceamento entre, no mínimo, 3 máquinas para distribuir o tráfego.
-- [ ] Criar um mecanismo de monitoramento de disponibilidade e resposta dos servidores.
+A imagem ilustra toda a estrutura de rede, uma máquina conectada a rede realiza o acesso à aplicação, o load balancer recebe e distribui o acesso entre os proxys reversos A,B e C, só então se obtém o acesso às aplicações A,B e C, essa aplicação frontend realiza requisições requisições ao backend em Python, que puxa do MongoDB, ambos hospedados no docker.
 
-#### Proxy Reverso
-- [ ] Configurar uma máquina com Nginx para atuar como Proxy Reverso.
-- [ ] Gerenciar requisições e redirecioná-las para os servidores apropriados.
+Após criada e validada a estrutura de rede o próximo passo foi configurar as máquinas na aws, foram utilizadas 4 máquinas, o load balancer, os 2 servidores de aplicação e um servidor de backup.
 
-#### Banco de Dados
-- [ ] Criar um servidor dedicado para o banco de dados usando Docker ou AWS RDS.
-- [ ] Escolher entre MySQL, PostgreSQL ou MongoDB e justificar a escolha.
+#### Máquina 1 - Load Balancer
 
-#### VPN
-- [ ] Configurar uma VPN segura (OpenVPN) para acessos externos.
-- [ ] Integrar a VPN ao firewall da rede para maior controle de acessos.
+Para criar a máquina do load balancer foi criada uma **nova instância na AWS** com ubuntu, além disso em **grupos de segurança** na grupo usado para criar essa instância foi necessário liberar o acesso às portas 22(para a conexão via ssh) e 80(porta usada pelo Nginx para o load balancer). Criada a instância abrimos o terminal do windows e executamos o comando:
 
-#### Docker e Virtualização
-- [ ] Utilizar Docker para hospedar servidores web e banco de dados.
-- [ ] Criar um docker-compose para gerenciamento facilitado dos serviços.
-- [ ] Demonstrar a escalabilidade dos containers e a comunicação entre eles. 
+`ssh -i ./caminho-da-chave/nome-da-chave.pem ubuntu@ip-maquina-aws`
 
-#### Endereçamento IPv4 e Segmentação de Redes
-- [ ] Definir a estrutura de endereçamento da empresa.
-- [ ] Implementar DHCP para gerenciar alocação dinâmica de endereços.
+Dentro do terminal linux o primeiro comando necessário é o responsável por atualizar os índices dos pacotes de instalação.
 
-#### Segurança Reforçada
-- [ ] Implementar autenticação multifator (2FA) para o acesso remoto.
-- [ ] Criar regras avançadas de firewall para proteger servidores internos.
+`apt update`
 
-#### Alta Disponibilidade
-- [ ] Implementar replicação de dados entre diferentes servidores.
-- [ ] Garantir redundância no balanceamento de carga para evitar falhas.
+Em seguida precisamos instalar o **Nginx** com o comando:
 
-#### Monitoramento e Análise
-- [ ] Configurar ferramentas como Prometheus e Grafana para monitoramento de 
-tráfego e desempenho.
-- [ ] Criar um painel de métricas para acompanhamento em tempo real.
+`apt install nginx`
 
-### ⚙ Tecnologias ⚙
+Como os IPs da AWS **não são elásticos**, sempre mudarão conforme se inicia a instância novamente, para não ser necessário sempre editar nos arquivos de configuração os IPs das máquinas, editamos o arquivo hosts localizado em `/etc/hosts`. Para editá-lo utilizamos o comando `vim /etc/hosts` e nele inserimos as seguintes linhas:
 
-<div> 
+```
+174.129.170.229 xptolb
+54.91.183.11 xptoapp01
+34.201.105.75 xptoapp02
+13.219.74.4 xptobackup
 
-</div>
+```
+
+Para salvar `:x` ou `:wq`. Com essas alterações ao criar o load balance, em vez de digitamos nos lugares necessários o IP das instâncias na AWS que sempre mudarão, podemos apenas digitar os nomes definidos nesse arquivo. Para criar o arquivo de cofiguração, antes excluímos o arquivo de configuração padrão para evitar possíveis erros, localizado em `/etc/nginx/sites-enabled`, para a exclusão, o comando: 
+
+`rm /etc/nginx/sites-enabled/default`
+
+Criamos um arquivo de configuração para o load balance em `/etc/nginx/conf.d` chamado "loadbalance.conf" com:
+
+`vim /etc/nginx/conf.d/loadbalance.conf`
+
+Nele inserimos o seguinte código:
+
+```
+upstream apps {
+  server xptoapp01 weight=1;
+  server xptoapp02 weight=1;
+
+  server xptobackup backup;
+}
+
+server {
+  listen 80 default_server;
+  server_name xptolb;
+
+  location / {
+    proxy_pass http://apps;
+  }
+}
+```

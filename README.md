@@ -69,6 +69,6 @@ O desenvolvimento do projeto é dividido em 4 sprints:
 
 ### ⚙ Tecnologias ⚙
 
-<div> 
-
-</div>
+| AWS | Nginx | 
+| ---------- | ---------- |
+| ![AWS](https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg) | ![Nginx](https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg) |

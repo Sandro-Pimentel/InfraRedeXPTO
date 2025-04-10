@@ -24,7 +24,7 @@ Para iniciar a primeira sprint foi necessário desenvolver a estrutura de rede d
 
 <img src="https://github.com/user-attachments/assets/ac35d36b-aa96-43aa-b1de-82a8683a4b74" width=700 />
 
-A imagem ilustra toda a estrutura de rede, uma máquina conectada a rede realiza o acesso à aplicação, o load balancer recebe e distribui o acesso entre os proxys reversos A,B e C, só então se obtém o acesso às aplicações A,B e C, essa aplicação frontend realiza requisições requisições ao backend em Python, que puxa do MongoDB, ambos hospedados no docker.
+A imagem ilustra toda a estrutura de rede, uma máquina conectada a rede realiza o acesso à aplicação, o load balancer recebe e distribui o acesso entre os proxys reversos A, B e C, só então se obtém o acesso às aplicações A, B e C, essa aplicação frontend realiza requisições requisições ao backend em Python, que puxa do MongoDB, ambos hospedados no docker.
 
 Após criada e validada a estrutura de rede o próximo passo foi configurar as máquinas na aws, foram utilizadas 4 máquinas, o load balancer, os 2 servidores de aplicação e um servidor de backup.
 
@@ -44,7 +44,7 @@ Em seguida precisamos instalar o **Nginx** com o comando:
 
 Como os IPs da AWS **não são elásticos**, sempre mudarão conforme se inicia a instância novamente, para não ser necessário sempre editar nos arquivos de configuração os IPs das máquinas, editamos o arquivo hosts localizado em `/etc/hosts`. Para editá-lo utilizamos o comando `vim /etc/hosts` e nele inserimos as seguintes linhas:
 
-```
+```bash
 174.129.170.229 xptolb
 54.91.183.11 xptoapp01
 34.201.105.75 xptoapp02
@@ -62,7 +62,7 @@ Criamos um arquivo de configuração para o load balance em `/etc/nginx/conf.d` 
 
 Nele inserimos o seguinte código:
 
-```
+```bash
 upstream apps {
   server xptoapp01 weight=1;
   server xptoapp02 weight=1;
@@ -89,7 +89,7 @@ Para a criação da máquina do servidor de aplicação 1 foram executados os me
 
 E nele inserimos o seguinte código:
 
-```
+```bash
 server {
   listen 80;
   root /var/www/html;
@@ -105,7 +105,7 @@ Por fim criamos a página index.html no local definido com o comando:
 
 Para diferenciar o app01, app02 e backup, adicionamos um simples html:
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -125,3 +125,11 @@ Para diferenciar o app01, app02 e backup, adicionamos um simples html:
 ```
 
 Esses passos podem ser replicados para a criação do app02 e do backup, as únicas alterações serão nos textos da tag `<title>` e `<h1>`.
+
+---
+
+Para visualizar os logs de entrada do servidor, utiliza-se o comando:
+
+`vim /var/log/nginx/access.log`
+
+Este comando mostra o IP da máquina que entrou no servidor, o horário e o sistema operacional.

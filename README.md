@@ -30,7 +30,7 @@ Após criada e validada a estrutura de rede o próximo passo foi configurar as m
 
 #### Máquina 1 - Load Balancer
 
-Para criar a máquina do load balancer foi criada uma **nova instância na AWS** com ubuntu, além disso em **grupos de segurança** na grupo usado para criar essa instância foi necessário liberar o acesso às portas 22(para a conexão via ssh) e 80(porta usada pelo Nginx para o load balancer). Criada a instância abrimos o terminal do windows e executamos o comando:
+Para a criação da máquina do load balancer foi criada uma **nova instância na AWS** com ubuntu, além disso em **grupos de segurança** na grupo usado para criar essa instância foi necessário liberar o acesso às portas 22(para a conexão via ssh) e 80(porta usada pelo Nginx para o load balancer). Criada a instância abrimos o terminal do windows e executamos o comando:
 
 `ssh -i ./caminho-da-chave/nome-da-chave.pem ubuntu@ip-maquina-aws`
 
@@ -79,3 +79,49 @@ server {
   }
 }
 ```
+Para testar o código acima digite `nginx -t`. Se não houver nenhum erro use `systemctl restart nginx` para reiniciar o nginx e garantir que as alterações já estão em execução.
+
+#### Máquina 2 - App01
+
+Para a criação da máquina do servidor de aplicação 1 foram executados os mesmos processos até a instalação do nginx. Também será criado um arquivo de configuração em `/etc/nginx/conf.d`, para isso usamos o comando:
+
+`vim /etc/nginx/conf.d/app01.conf`
+
+E nele inserimos o seguinte código:
+
+```
+server {
+  listen 80;
+  root /var/www/html;
+  index index.html;
+}
+```
+
+`root` define que `/var/www/html` será o caminho onde estarão os arquivos do frontend e `index` define que o arquivo `index.html` será renderizado ao entrar nesse IP. Use `nginx -t` para testar as alterações.
+
+Por fim criamos a página index.html no local definido com o comando:
+
+`vim /var/www/html/index.html`
+
+Para diferenciar o app01, app02 e backup, adicionamos um simples html:
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> App01 </title>
+    <style>
+      html {color-scheme: light dark;}
+      body {
+        width: 35em; margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1> Servidor de Aplicacao 1! </h1>
+  </body>
+</html>
+```
+
+Esses passos podem ser replicados para a criação do app02 e do backup, as únicas alterações serão nos textos da tag `<title>` e `<h1>`.

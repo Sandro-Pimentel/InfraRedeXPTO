@@ -132,4 +132,4 @@ Para visualizar os logs de entrada do servidor, utiliza-se o comando:
 
 `vim /var/log/nginx/access.log`
 
-Este comando mostra o IP da máquina que entrou no servidor, o horário e o sistema operacional.
+Este comando mostra o IP da máquina que entrou no servidor, o método HTTP utilizado, a URL acessada, código de status desta requisição o horário e o Sistema Operacional.

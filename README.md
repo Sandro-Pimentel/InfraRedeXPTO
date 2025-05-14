@@ -1,6 +1,6 @@
 # InfraRedeXPTO - SPRINT-1
 
-> _💻 Status do Projeto: Concluída._
+> _💻 Status da Sprint: Concluída._
 
 ## Resumo
 <p align="justify">
@@ -22,9 +22,9 @@ Na primeira sprint do projeto foi focado no desenvolvimento do **Load Balancer**
   
 Para iniciar a primeira sprint foi necessário desenvolver a estrutura de rede do projeto por meio do site **SmartDraw**:
 
-<img src="https://github.com/user-attachments/assets/ac35d36b-aa96-43aa-b1de-82a8683a4b74" width=700 />
+<img src="https://github.com/user-attachments/assets/d77d97e2-8152-423f-84eb-923a8b554af9" width=700 />
 
-A imagem ilustra toda a estrutura de rede, uma máquina conectada a rede realiza o acesso à aplicação, o load balancer recebe e distribui o acesso entre os proxys reversos A, B e C, só então se obtém o acesso às aplicações A, B e C, essa aplicação frontend realiza requisições requisições ao backend em Python, que puxa do MongoDB, ambos hospedados no docker.
+A imagem ilustra toda a estrutura de rede, uma máquina conectada a rede tenta realizar o acesso à aplicação, passa primeiro pela VPN, então o load balancer recebe e distribui o acesso entre os proxys reversos A, B e C, só então se obtém o acesso às aplicações A, B e C, essa aplicação frontend realiza requisições ao backend em Python, que puxa do MongoDB, ambos hospedados no docker.
 
 Após criada e validada a estrutura de rede o próximo passo foi configurar as máquinas na aws, foram utilizadas 4 máquinas, o load balancer, os 2 servidores de aplicação e um servidor de backup.
 

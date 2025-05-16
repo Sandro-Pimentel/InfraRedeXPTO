@@ -25,11 +25,11 @@ O projeto é uma atividade em trio da faculdade e seu objetivo é criar uma infr
 - [ ] Criar um mecanismo de monitoramento de disponibilidade e resposta dos servidores.
 
 #### Proxy Reverso
-- [ ] Configurar uma máquina com Nginx para atuar como Proxy Reverso.
-- [ ] Gerenciar requisições e redirecioná-las para os servidores apropriados.
+- [X] Configurar uma máquina com Nginx para atuar como Proxy Reverso.
+- [X] Gerenciar requisições e redirecioná-las para os servidores apropriados.
 
 #### Banco de Dados
-- [ ] Criar um servidor dedicado para o banco de dados usando Docker ou AWS RDS.
+- [X] Criar um servidor dedicado para o banco de dados usando Docker ou AWS RDS.
 - [ ] Escolher entre MySQL, PostgreSQL ou MongoDB e justificar a escolha.
 
 #### VPN
@@ -38,8 +38,8 @@ O projeto é uma atividade em trio da faculdade e seu objetivo é criar uma infr
 
 #### Docker e Virtualização
 - [ ] Utilizar Docker para hospedar servidores web e banco de dados.
-- [ ] Criar um docker-compose para gerenciamento facilitado dos serviços.
-- [ ] Demonstrar a escalabilidade dos containers e a comunicação entre eles. 
+- [X] Criar um docker-compose para gerenciamento facilitado dos serviços.
+- [X] Demonstrar a escalabilidade dos containers e a comunicação entre eles. 
 
 #### Endereçamento IPv4 e Segmentação de Redes
 - [ ] Definir a estrutura de endereçamento da empresa.

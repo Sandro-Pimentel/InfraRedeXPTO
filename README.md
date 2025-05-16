@@ -14,7 +14,9 @@ Na primeira sprint do projeto foi focado no desenvolvimento do **Load Balancer**
 - Configuração do Load Balancer
    - Implementar um Load Balancer com Nginx ou HAProxy.
    - Configurar o balanceamento entre, no mínimo, 3 máquinas para distribuir o tráfego.
-
+- Proxy Reverso
+   - Configurar uma máquina com Nginx para atuar como Proxy Reverso.
+   - Gerenciar requisições e redirecioná-las para os servidores apropriados
 </p>
 
 ### Desenvolvimento

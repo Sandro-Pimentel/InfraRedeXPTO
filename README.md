@@ -17,7 +17,7 @@ Na primeira sprint do projeto foi focado no desenvolvimento do **Load Balancer**
 
 </p>
 
-### Desenvolvimento
+## Desenvolvimento
 <p align="justify">
   
 Para iniciar a primeira sprint foi necessário desenvolver a estrutura de rede do projeto por meio do site **SmartDraw**:
@@ -28,7 +28,7 @@ A imagem ilustra toda a estrutura de rede, uma máquina conectada a rede tenta r
 
 Após criada e validada a estrutura de rede o próximo passo foi configurar as máquinas na aws, foram utilizadas 4 máquinas, o load balancer, os 2 servidores de aplicação e um servidor de backup.
 
-#### Máquina 1 - Load Balancer
+### Máquina 1 - Load Balancer
 
 Para a criação da máquina do load balancer foi criada uma **nova instância na AWS** com ubuntu, além disso em **grupos de segurança** na grupo usado para criar essa instância foi necessário liberar o acesso às portas 22(para a conexão via ssh) e 80(porta usada pelo Nginx para o load balancer). Criada a instância abrimos o terminal do windows e executamos o comando:
 
@@ -81,7 +81,7 @@ server {
 ```
 Para testar o código acima digite `nginx -t`. Se não houver nenhum erro use `systemctl restart nginx` para reiniciar o nginx e garantir que as alterações já estão em execução.
 
-#### Máquina 2 - App01
+### Máquina 2 - App01
 
 Para a criação da máquina do servidor de aplicação 1 foram executados os mesmos processos até a instalação do nginx. Também será criado um arquivo de configuração em `/etc/nginx/conf.d`, para isso usamos o comando:
 
